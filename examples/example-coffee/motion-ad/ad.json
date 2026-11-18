@@ -1,0 +1,29 @@
+{
+  "theme": {
+    "background": "#1C1917",
+    "surface": "#292524",
+    "text": "#FAF5EF",
+    "textDim": "#A8A29E",
+    "accent": "#C2410C",
+    "highlight": "#F59E0B",
+    "light": "#FAF5EF",
+    "ink": "#1C1917",
+    "display": "Fraunces",
+    "body": "Inter"
+  },
+  "locale": "en-US",
+  "bpm": 112,
+  "beatsPerScene": 4,
+  "scenes": [
+    { "type": "title", "background": "dark", "kicker": "Every morning", "text": "15 minutes\nin *line?*", "icon": "time", "beats": 5 },
+    { "type": "cross", "background": "accent", "kicker": "Plot twist", "text": "Waiting", "sub": "is not a *flavor.*" },
+    { "type": "list", "background": "light", "title": "Order in *3 taps*", "items": [
+      { "icon": "phone", "text": "Pick your usual" },
+      { "icon": "walk", "text": "Walk right in" },
+      { "icon": "coffee", "text": "Grab your cup" }
+    ], "beats": 6 },
+    { "type": "price", "background": "highlight", "label": "Time in line", "from": 15, "to": 0, "suffix": " min", "note": "ready in 4, on average", "burst": "icons", "icon": "coffee", "beats": 5 },
+    { "type": "coupon", "background": "dark", "kicker": "First order", "value": "*20%* off", "code": "FIRSTCUP", "note": "in the Kettlewick app" },
+    { "type": "end", "title": "Skip the *line.*", "subtitle": "@kettlewick.coffee", "cta": "Download Kettlewick", "name": "Kettlewick", "icon": "coffee", "beats": 6 }
+  ]
+}

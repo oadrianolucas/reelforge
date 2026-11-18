@@ -1,0 +1,153 @@
+{
+  "theme": {
+    "background": "#1C1917",
+    "surface": "#292524",
+    "text": "#FAF5EF",
+    "textDim": "#A8A29E",
+    "accent": "#C2410C",
+    "highlight": "#F59E0B",
+    "light": "#FAF5EF",
+    "ink": "#1C1917",
+    "display": "Fraunces",
+    "body": "Inter"
+  },
+  "app": {
+    "name": "Kettlewick",
+    "tagline": "Order ahead. Skip the line.",
+    "icon": "coffee"
+  },
+  "bpm": 128,
+  "shotSeconds": 1.4,
+  "shots": [
+    {
+      "type": "logo"
+    },
+    {
+      "type": "title",
+      "text": "Your usual,\nin *3 taps*"
+    },
+    {
+      "type": "screen",
+      "screen": "menu",
+      "title": "Pick your *usual*",
+      "tilt": "left",
+      "props": {
+        "greeting": "Good morning, Maya",
+        "title": "What's it today?",
+        "chips": [
+          "Popular",
+          "Hot",
+          "Iced",
+          "Bakery"
+        ],
+        "items": [
+          {
+            "name": "Oat flat white",
+            "desc": "Double shot, oat milk",
+            "price": "$3.49",
+            "icon": "RiCupLine"
+          },
+          {
+            "name": "Cold brew",
+            "desc": "Steeped 18 hours",
+            "price": "$4.20",
+            "icon": "RiDrinks2Line"
+          },
+          {
+            "name": "Butter croissant",
+            "desc": "Baked at 6 am",
+            "price": "$2.75",
+            "icon": "RiCake3Line"
+          }
+        ],
+        "button": "Order"
+      }
+    },
+    {
+      "type": "button",
+      "title": "One tap.",
+      "text": "Order ahead"
+    },
+    {
+      "type": "screen",
+      "screen": "order-status",
+      "title": "Ready in *4 min*",
+      "tilt": "right",
+      "props": {
+        "title": "Your order",
+        "item": "Oat flat white",
+        "place": "Pickup at the counter",
+        "eta": 4,
+        "steps": [
+          "Received",
+          "Brewing",
+          "Ready for pickup"
+        ]
+      },
+      "beats": 4
+    },
+    {
+      "type": "screen",
+      "screen": "stamp-card",
+      "title": "10th cup *on us*",
+      "tilt": "left",
+      "props": {
+        "title": "Loyalty card",
+        "stamps": 9,
+        "total": 10,
+        "reward": "Next cup is on us",
+        "stampIcon": "RiCupFill"
+      }
+    },
+    {
+      "type": "orbit",
+      "screen": "menu",
+      "icons": [
+        "coffee",
+        "RiCupFill",
+        "leaf",
+        "cake",
+        "star",
+        "timer"
+      ],
+      "props": {
+        "greeting": "Good morning, Maya",
+        "title": "What's it today?",
+        "chips": [
+          "Popular",
+          "Hot",
+          "Iced",
+          "Bakery"
+        ],
+        "items": [
+          {
+            "name": "Oat flat white",
+            "desc": "Double shot, oat milk",
+            "price": "$3.49",
+            "icon": "RiCupLine"
+          },
+          {
+            "name": "Cold brew",
+            "desc": "Steeped 18 hours",
+            "price": "$4.20",
+            "icon": "RiDrinks2Line"
+          },
+          {
+            "name": "Butter croissant",
+            "desc": "Baked at 6 am",
+            "price": "$2.75",
+            "icon": "RiCake3Line"
+          }
+        ],
+        "button": "Order"
+      },
+      "beats": 4
+    },
+    {
+      "type": "end",
+      "title": "Skip the *line.*",
+      "subtitle": "@kettlewick.coffee",
+      "cta": "Download Kettlewick"
+    }
+  ]
+}

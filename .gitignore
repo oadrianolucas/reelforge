@@ -1,0 +1,50 @@
+# secrets
+.env
+
+# Remotion deps and output
+remotion/node_modules/
+remotion/out/
+remotion/public/*
+!remotion/public/.gitkeep
+
+# generated videos and third-party references
+videos/*/
+!videos/.gitkeep
+references/
+
+# Python
+__pycache__/
+*.pyc
+
+# third-party media you keep locally
+library/music/commercial/
+library/hooks/third-party/
+library/personas/*/clips/
+
+# git keeps TEXT only (code, .md, .json) — media stays on disk
+*.mp3
+*.wav
+*.m4a
+*.aac
+*.ogg
+*.mp4
+*.mov
+*.webm
+*.mkv
+*.y4m
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.heic
+*.psd
+*.pdf
+*.ttf
+*.otf
+*.woff
+*.woff2
+*.zip
+
+.DS_Store
+Thumbs.db
