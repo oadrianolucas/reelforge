@@ -23,6 +23,7 @@ Styles included:
 - **Hook script** — researched spoken scripts about a repo or tech news, ready for the recorded style.
 - **Elegant brand** — calm, premium brand/event video with real photos, serif titles and an app screen on a tablet.
 - **Narrated lesson** — 16:9 training video with chapters, lists, plans and objections.
+- **System explainer** — 16:9, no voice: database tables assembling as cards, before → after, relationship lines.
 
 ## How it works
 
@@ -88,7 +89,8 @@ cd remotion && npx remotion studio
 ```
 
 The examples use a fictional brand, `brands/example-coffee/`. Try `example-coffee/retail-offers` and
-`example-coffee/app-showcase` too, and `--format 4:5` for the feed size.
+`example-coffee/app-showcase` too, and `--format 4:5` for the feed size; `example-coffee/system-explainer` is a 16:9
+walkthrough of a (fictional) database redesign.
 
 ## Make your own brand
 
@@ -125,6 +127,7 @@ resumed.
 | `hook-script` | researched script for a repo/news video | ~US$ 0 |
 | `elegant-brand` | premium brand or event video | voice + music only |
 | `narrated-lesson` | 16:9 training/presentation | voice + music |
+| `system-explainer` | 16:9 internal explainer of a system/database redesign, no voice | US$ 0 |
 | `analyze-reference` | learn a style from reference videos | transcription only |
 
 ## Costs and safety
@@ -149,7 +152,7 @@ CLAUDE.md            the rules Claude follows in this repo (flow, spending, form
 formats.md           UGC formats, hooks, pacing, script.md template
 brands/              _template/ and example-coffee/; your brands go here
 library/             reusable personas, music, sfx, hooks (catalog.json + README; media stays local)
-examples/            free example jobs
+examples/            free example jobs (motion ad, retail offers, app showcase, system explainer)
 scripts/             Python CLIs
 remotion/            Remotion project (compositions, components, motion kit)
 videos/              your jobs, one folder per brand (ignored by git)

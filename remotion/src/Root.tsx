@@ -7,6 +7,7 @@ import { Lesson, calculateLessonMetadata } from "./lesson/Lesson";
 import { MotionAd, calculateMotionAdMetadata } from "./videos/MotionAd";
 import { RetailOffers, calculateRetailOffersMetadata } from "./videos/RetailOffers";
 import { AppShowcase, calculateAppShowcaseMetadata } from "./videos/AppShowcase";
+import { SystemExplainer, calculateSystemExplainerMetadata } from "./explainer/SystemExplainer";
 import { FPS, Format, PLACEHOLDER_SECONDS, SIZE } from "./components/formats";
 import type { Format as RecordedFormat } from "./recorded/types";
 
@@ -38,6 +39,9 @@ export const Root: React.FC = () => (
 
     {/* Narrated 16:9 lesson (scripts/lesson.py): chapters, lists, plans, objections */}
     <Composition id="Lesson" component={Lesson} calculateMetadata={calculateLessonMetadata} durationInFrames={PH} fps={FPS} width={1920} height={1080} defaultProps={{ slug: "" }} />
+
+    {/* System explainer (explainer.json): 16:9, no voice — tables as cards, before → after, relationship lines, captions */}
+    <Composition id="SystemExplainer" component={SystemExplainer} calculateMetadata={calculateSystemExplainerMetadata} durationInFrames={PH} fps={FPS} width={1920} height={1080} defaultProps={{ slug: "" }} />
 
     {/* Vibe + text (10 s organic post): selfie clip + native-style text + list on the beat */}
     {VARIANTS.map(([suffix, format]) => (

@@ -1,7 +1,7 @@
 # reelforge — AI video factory
 
 You produce short videos (realistic UGC, motion ads, edited talking-head recordings, elegant brand videos, narrated
-lessons) for the brands registered in `brands/`. No video editor: everything comes out of APIs (ElevenLabs,
+lessons, system explainers) for the brands registered in `brands/`. No video editor: everything comes out of APIs (ElevenLabs,
 OpenRouter, Apify) + Remotion + ffmpeg, and the result is `videos/<brand>/<job>/final.mp4` (+ `final-4x5.mp4`, …).
 
 Reply in the user's language. Narration language comes from `brand.md → Tone of voice → Narration language`.
@@ -55,6 +55,7 @@ mapped beats, sound effects, visual hooks — index in `library/catalog.json`, r
 | `hook-script` | spoken script about a repo/project/AI news in the "told case" format (hook, turns, CTA) → then `recorded` | ~US$ 0 |
 | `elegant-brand` | **elegant brand/tech** video (not an ad): real photos/footage + calm narration + serif, numbers, a quote, the app on a tablet, sign-off (`ElegantJob`) | voice + music only |
 | `narrated-lesson` | **narrated 16:9 training/presentation**: chapters, lists on the spoken word, plans, objections (`Lesson`) | voice + music (+ photos ~US$ 0.04) |
+| `system-explainer` | **internal 16:9 explainer of a system/database** (no voice, big captions, low music): tables assemble as cards, before → after per area, FK lines, old tables flying into the new one (`SystemExplainer`) | US$ 0 |
 | `analyze-reference` | the user sent reference videos → metrics, structure, style → which style it becomes | transcription only |
 
 If no style fits, analyze the reference and create a new skill in `.claude/skills/<style>/SKILL.md`.
@@ -96,7 +97,7 @@ How the styles were derived: `docs/reference-analysis.md`.
 | `lesson.py` | narrated 16:9 lesson: `voice` (one mp3 per chapter), `estimate`, `build`, `bundle`, `frames`, `render` |
 | `approval_preview.py` | preview for a **client** to approve: "FOR APPROVAL" across the frame + a band, 720 px → `<final>-PREVIEW.mp4` |
 | `check.py` | finishing of **every** render: −14 LUFS / peak ≤ −1 dBTP, contact sheet, speech still audible |
-| `example.py` | renders the free examples: `python3 scripts/example.py example-coffee/motion-ad [--format 4:5] [--render]` |
+| `example.py` | renders the free examples: `python3 scripts/example.py example-coffee/motion-ad [--format 4:5] [--render]` (`system-explainer` is 16:9 only) |
 
 ## Remotion compositions
 
@@ -110,6 +111,7 @@ placeholder, so `npx remotion studio` always opens.
 | `Recorded`, `Recorded4x5`, `Recorded1x1`, `Recorded16x9` | `cut.mp4`, `edl.json`, `edit.json` | `recorded` |
 | `ElegantJob`, `ElegantJob4x5`, `ElegantJob1x1` | `script.json` (from `elegant.py publish`) | `elegant-brand` |
 | `Lesson` (1920x1080) | `timeline.json` (from `lesson.py build`) | `narrated-lesson` |
+| `SystemExplainer` (1920x1080) | `explainer.json` | `system-explainer` |
 | `VibeText`, `VibeText4x5`, `VibeText1x1` | `vibe.json` | `vibe-text` |
 | `MotionAd`, `MotionAd4x5`, `MotionAd1x1` | `ad.json` | `motion-ad` |
 | `RetailOffers`, `RetailOffers4x5`, `RetailOffers1x1` | `offers.json` | `retail-offers` |

@@ -15,6 +15,8 @@ import { loadFont as loadPlayfair } from "@remotion/google-fonts/PlayfairDisplay
 import { loadFont as loadPoppins } from "@remotion/google-fonts/Poppins";
 import { loadFont as loadMontserrat } from "@remotion/google-fonts/Montserrat";
 import { loadFont as loadBricolage } from "@remotion/google-fonts/BricolageGrotesque";
+import { loadFont as loadJetBrainsMono } from "@remotion/google-fonts/JetBrainsMono";
+import { loadFont as loadPlexMono } from "@remotion/google-fonts/IBMPlexMono";
 import { DEFAULT_THEME, Theme, fetchJson } from "../components/theme";
 import type { Word } from "../components/Captions";
 
@@ -72,9 +74,13 @@ const FONTS: Record<string, () => Loaded> = {
   Poppins: () => loadPoppins("normal", { weights: ["400", "500", "600", "700", "800", "900"], subsets: L }),
   Montserrat: () => loadMontserrat("normal", { weights: ["400", "500", "600", "700", "800", "900"], subsets: L }),
   "Bricolage Grotesque": () => loadBricolage("normal", { weights: ["400", "500", "600", "700", "800"], subsets: L }),
+  // monospace (code, table and column names)
+  "JetBrains Mono": () => loadJetBrainsMono("normal", { weights: ["400", "500", "600", "700"], subsets: L }),
+  "IBM Plex Mono": () => loadPlexMono("normal", { weights: ["400", "500", "600", "700"], subsets: L }),
 };
 const fontCache = new Map<string, { family: string; done: Promise<void> }>();
-function getFont(name: string) {
+/** A whitelisted font by name (unknown → Inter): its CSS family and a promise that resolves once it is loaded. */
+export function getFont(name: string) {
   const key = FONTS[name] ? name : "Inter";
   let f = fontCache.get(key);
   if (!f) {

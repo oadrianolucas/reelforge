@@ -128,7 +128,8 @@ Ready-to-render examples (no media at all): `examples/example-coffee/{motion-ad,
 - `theme`: `{ background, surface, text, textDim, accent, highlight, light, ink, display, body }` — merged over a neutral
   default. `light` = paper/cream background, `ink` = text on light backgrounds, `display`/`body` = font names:
   `Inter`, `Fraunces`, `Anton`, `DM Sans`, `Space Grotesk`, `Instrument Serif`, `Playfair Display`, `Poppins`,
-  `Montserrat`, `Bricolage Grotesque` (unknown → Inter; add more in `FONTS` in kit.tsx).
+  `Montserrat`, `Bricolage Grotesque`, and the monospace `JetBrains Mono`, `IBM Plex Mono` (unknown → Inter; add more in
+  `FONTS` in kit.tsx).
 - Backgrounds (`background`/`color`): `"dark" | "accent" | "light" | "highlight"` or any CSS color.
 - `music`: `{ "file", "volume"?, "start"?, "beats"? }` — file in `public/<slug>/` (or `library/...`); beats from
   `<file minus extension>.beats.json` (`onsets`, `interval`, scripts/music_beats.py) unless `beats` names another file.
@@ -183,6 +184,41 @@ New generic phone screens in `src/components/screens/` (also usable by UgcNarrat
 - `"menu"`: `greeting`, `title`, `chips: [string]`, `items: [{ name, desc?, price, icon? }]`, `selected` (index), `button`.
 - `"order-status"`: `title`, `item`, `place`, `eta` (min), `etaLabel`, `steps: [string]`.
 - `"stamp-card"`: `title`, `stamps`, `total`, `reward`, `stampIcon` (Remix name).
+
+### SystemExplainer — `public/<slug>/explainer.json` (`explainer/SystemExplainer.tsx`)
+Internal explainer of a system/database architecture: one composition, 1920x1080, props `{ slug }`, **no voice**, big
+caption bar, optional low music. Data model, auto-layout, link routing and timing in `explainer/layout.ts`. Example:
+`examples/example-coffee/system-explainer/` (`python3 scripts/example.py example-coffee/system-explainer --render`).
+```
+{ "title"?: "Project name",                // top right of every scene
+  "theme"?: { ...common theme, "mono"?: "JetBrains Mono", "card"?, "pk"?, "fk"?, "new"?, "changed"?, "removed"? },  // hex colors
+  "labels"?: { "before", "after", "new", "changed", "removed", "kept", "more" },   // on-screen words (default English)
+  "music"?: { "file", "volume"?: 0.15, "start"? },
+  "maxRows"?: 7,                            // columns per card; beyond it the card shows "+ n more"
+  "tables"?: [ table ],                     // shared definitions, referenced by id in the scenes
+  "scenes": [   // each: "seconds"? (default: build time + ~2.4 s hold, or the captions' reading time), "caption"?: text | [text]
+    { "type": "intro",       "title", "subtitle"?, "kicker"?, "stats"?: [{ "value", "label" }] },
+    { "type": "tables",      "title", "tables": [ref], "links"?: [link], "autoLinks"?: true, "columns"? },
+    { "type": "beforeAfter", "area", "before": [ref], "after": [ref], "merges"?: [{ "from": [id], "into": id }],
+                             "links"?: [link], "autoLinks"?: true, "columns"?, "turn"? },
+    { "type": "summary",     "title", "items": [text | { "text", "icon"? }] } ] }
+```
+- `table` = `{ "id", "name"? (default id), "icon"?, "status"?: "new"|"changed"|"removed"|"kept", "note"? (one short line),
+  "x"?, "y"? (explicit top-left in the frame; otherwise auto-laid), "columns": [{ "name", "type"?, "pk"?, "fk"?: "table.column", "note"? }] }`.
+  A column `note` (e.g. "free text") replaces the type, in the warning color. `ref` = an id from `tables` or an inline
+  table (`{ "id": "orders", "status": "kept" }` overrides fields of the shared one).
+- `link` = `{ "from": "table[.column]", "to": "table[.column]", "label"? }`. With `autoLinks` (default) every `fk` whose
+  target is on screen draws a line too, from the FK row to the referenced row.
+- **Layout**: cards share one width per scene and fill a grid (rows balanced, last row centered); `columns` forces the
+  grid width. When the board does not fit, types are hidden first, then the board scales down. Lines run only through
+  the gutters between cards (side → gutter → channel between rows → gutter → side), so they never cross a card;
+  hand-placed (`x`,`y`) cards get a plain curve instead.
+- **beforeAfter**: before cards on the left (header-only chips when they don't fit), after cards on the right
+  (`status` defaults to `new`; use `kept` for tables already shown — dashed). The after side starts at caption `turn`
+  (default 1 with 2+ captions). Each merge lights its sources and flies a copy of their name into the target just before
+  it assembles; a source fully merged dims; a source with `status: "removed"` is struck through at the turn.
+- **Captions**: `*emphasis*` in the highlight color, `` `code` `` in mono. Split over the scene by reading time
+  (~1.3 s + 0.3 s/word, 2.6–5.6 s). Icons: Remix names or the kit aliases.
 
 ## Script outputs
 

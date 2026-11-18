@@ -1,0 +1,154 @@
+{
+  "title": "Kettlewick Coffee",
+  "theme": {
+    "background": "#121110",
+    "surface": "#1d1b19",
+    "card": "#1b1917",
+    "text": "#FAF5EF",
+    "textDim": "#A8A29E",
+    "accent": "#C2410C",
+    "highlight": "#F59E0B",
+    "ink": "#1C1917",
+    "display": "Inter",
+    "body": "Inter",
+    "mono": "JetBrains Mono"
+  },
+  "tables": [
+    { "id": "orders_sheet", "icon": "RiFileExcel2Line", "columns": [
+      { "name": "order_no", "type": "number" },
+      { "name": "date", "type": "text" },
+      { "name": "customer_name", "note": "retyped" },
+      { "name": "phone", "note": "free text" },
+      { "name": "drink", "note": "free text" },
+      { "name": "size", "type": "S/M/L" },
+      { "name": "price", "note": "typed in" }
+    ] },
+    { "id": "loyalty_cards", "icon": "RiFileExcel2Line", "columns": [
+      { "name": "customer_name", "note": "copy" },
+      { "name": "phone", "note": "copy" },
+      { "name": "stamps", "note": "edited" },
+      { "name": "last_visit", "type": "text" }
+    ] },
+    { "id": "customers", "columns": [
+      { "name": "id", "type": "uuid", "pk": true },
+      { "name": "name", "type": "text" },
+      { "name": "phone", "type": "text" },
+      { "name": "email", "type": "text" },
+      { "name": "created_at", "type": "time" }
+    ] },
+    { "id": "products", "columns": [
+      { "name": "id", "type": "uuid", "pk": true },
+      { "name": "name", "type": "text" },
+      { "name": "size", "type": "text" },
+      { "name": "price", "type": "money" },
+      { "name": "active", "type": "bool" }
+    ] },
+    { "id": "orders", "columns": [
+      { "name": "id", "type": "uuid", "pk": true },
+      { "name": "customer_id", "type": "uuid", "fk": "customers.id" },
+      { "name": "placed_at", "type": "time" },
+      { "name": "status", "type": "text" },
+      { "name": "total", "type": "money" }
+    ] },
+    { "id": "order_items", "columns": [
+      { "name": "id", "type": "uuid", "pk": true },
+      { "name": "order_id", "type": "uuid", "fk": "orders.id" },
+      { "name": "product_id", "type": "uuid", "fk": "products.id" },
+      { "name": "quantity", "type": "int" },
+      { "name": "unit_price", "type": "money" }
+    ] },
+    { "id": "loyalty_stamps", "columns": [
+      { "name": "id", "type": "uuid", "pk": true },
+      { "name": "customer_id", "type": "uuid", "fk": "customers.id" },
+      { "name": "order_id", "type": "uuid", "fk": "orders.id" },
+      { "name": "earned_at", "type": "time" },
+      { "name": "redeemed_at", "type": "time" }
+    ] }
+  ],
+  "scenes": [
+    {
+      "type": "intro",
+      "kicker": "INTERNAL · DATA REDESIGN",
+      "title": "How *Kettlewick* stores an order",
+      "subtitle": "From two spreadsheets to five linked tables",
+      "stats": [
+        { "value": "2 → 5", "label": "tables" },
+        { "value": "5", "label": "relationships" },
+        { "value": "1", "label": "row per customer" }
+      ],
+      "seconds": 5.5
+    },
+    {
+      "type": "tables",
+      "title": "Today",
+      "tables": ["orders_sheet", "loyalty_cards"],
+      "caption": [
+        "Today every order is a *row in a spreadsheet*.",
+        "Name, phone and drink are typed again on every order.",
+        "Loyalty stamps live in *another sheet*, matched by name."
+      ]
+    },
+    {
+      "type": "beforeAfter",
+      "area": "Customers & orders",
+      "before": ["orders_sheet", "loyalty_cards"],
+      "after": ["customers", "orders"],
+      "merges": [
+        { "from": ["orders_sheet", "loyalty_cards"], "into": "customers" },
+        { "from": ["orders_sheet"], "into": "orders" }
+      ],
+      "caption": [
+        "Names and phones are spread over two sheets.",
+        "They become one `customers` table: each person stored *once*.",
+        "Each order points to its customer through `customer_id`."
+      ]
+    },
+    {
+      "type": "beforeAfter",
+      "area": "Menu & line items",
+      "before": ["orders_sheet"],
+      "after": ["products", "order_items", { "id": "orders", "status": "kept" }],
+      "merges": [
+        { "from": ["orders_sheet"], "into": "products" },
+        { "from": ["orders_sheet"], "into": "order_items" }
+      ],
+      "caption": [
+        "Drinks and prices were free text, so a typo broke the reports.",
+        "The menu becomes `products`, with one price per size.",
+        "`order_items` says what was in each order, and at what price."
+      ]
+    },
+    {
+      "type": "beforeAfter",
+      "area": "Loyalty",
+      "before": [{ "id": "loyalty_cards", "status": "removed" }],
+      "after": ["loyalty_stamps", { "id": "customers", "status": "kept" }, { "id": "orders", "status": "kept" }],
+      "merges": [{ "from": ["loyalty_cards"], "into": "loyalty_stamps" }],
+      "caption": [
+        "Stamps were a number someone edited by hand.",
+        "Now each stamp is a row in `loyalty_stamps`, tied to the order that earned it."
+      ]
+    },
+    {
+      "type": "tables",
+      "title": "The whole picture",
+      "tables": ["customers", "orders", "loyalty_stamps", "products", "order_items"],
+      "columns": 3,
+      "caption": [
+        "Five tables, five relationships.",
+        "Every order, item and stamp traces back to *one customer*."
+      ]
+    },
+    {
+      "type": "summary",
+      "title": "What changes",
+      "items": [
+        "Customers are stored once: no more retyping",
+        "Menu prices live in one place",
+        "Stamps are earned by real orders, not edited",
+        "Reports group by `product_id`, not by spelling"
+      ],
+      "caption": "Next: import last year's sheet and run both side by side for a week."
+    }
+  ]
+}
