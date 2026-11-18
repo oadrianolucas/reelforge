@@ -48,3 +48,6 @@ library/personas/*/clips/
 
 .DS_Store
 Thumbs.db
+
+# repo artwork shown on GitHub (README cover) is the only media in git
+!.github/*.jpg

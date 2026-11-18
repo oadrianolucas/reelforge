@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/cover.jpg" alt="reelforge — videos to grow your business" width="100%"></p>
+
 # reelforge
 
 An AI video factory you drive from [Claude Code](https://claude.com/claude-code). You describe the video you want;
